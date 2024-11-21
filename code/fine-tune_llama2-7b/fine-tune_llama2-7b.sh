@@ -1,8 +1,10 @@
 export HF_AUTH_TOKEN="Your_API_Token"
 python3 qlora.py \
 --model_name_or_path meta-llama/Llama-2-7b-hf \
---use_auth --output_dir "./finetuned_output" \
---logging_steps 50 --save_strategy steps \
+--use_auth \
+--output_dir "./finetuned_output" \
+--logging_steps 50 \
+--save_strategy steps \
 --data_seed 42 \
 --max_train_samples 150 \
 --save_steps 250 \
