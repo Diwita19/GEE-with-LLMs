@@ -1,0 +1,45 @@
+export HF_AUTH_TOKEN="Your_API_Token"            # Sets the Hugging Face authentication token to allow access to models and datasets that require authentication.
+python3 qlora.py \                               # Executes the Python script `qlora.py` for fine-tuning the LLaMA-2 model using LoRA configurations. 
+--model_name_or_path meta-llama/Llama-2-7b-hf \  # Specifies the base model (LLaMA-2 7B) to fine-tune, hosted on Hugging Face under the `meta-llama` namespace.
+--use_auth \                                     # Enables the use of the Hugging Face authentication token for accessing the model.
+--output_dir "./finetuned_output" \    # Directory where the fine-tuned model and related outputs (e.g., checkpoints, logs) will be saved.
+--logging_steps 50 \               # Logs training metrics and progress every 50 steps.
+--save_strategy steps \            # Configures the checkpoint saving strategy based on steps rather than epochs.
+--data_seed 42 \                   # Sets the random seed for reproducibility of dataset sampling.
+--max_train_samples 150 \          # Limits the number of training samples to 150 for quick testing or debugging.
+--save_steps 250 \                 # Saves model checkpoints every 250 training steps.
+--save_total_limit 2 \             # Retains only the latest 2 checkpoints to conserve disk space.
+--evaluation_strategy steps \      # Evaluates the model periodically based on training steps.
+--eval_dataset_size 5 \             # Specifies the size of the evaluation dataset.
+--max_eval_samples 250 \           # Limits the number of samples used for evaluation to 250.
+--per_device_eval_batch_size 1 \   # Sets the batch size to 1 per GPU for evaluation.
+--max_new_tokens 512 \             # Limits the maximum number of tokens generated in a single inference step to 512.
+--dataloader_num_workers 1 \       # Sets the number of worker threads for data loading to 1.
+--group_by_length \                # Groups sequences of similar lengths together to improve training efficiency.
+--logging_strategy steps \         # Logs progress and metrics based on steps.
+--remove_unused_columns False \     # Retains unused columns in the dataset to avoid compatibility issues.
+--do_train \              # Enables the training process.
+--do_eval \               # Enables the evaluation process during training.
+--lora_r 64 \             # Sets the rank for LoRA (Low-Rank Adaptation) layers to 64.
+--lora_alpha 16 \         # Configures the scaling factor for LoRA layers
+--lora_modules all \      # Applies LoRA to all applicable layers of the model.
+--double_quant \          # Enables double quantization for reducing memory usage.
+--quant_type nf4 \         # Specifies the quantization type as `nf4` (NormalFloat4).
+--fp16 \                   # Enables mixed precision training using FP16 (16-bit floating-point).
+--bits 4 \                   # Sets the number of bits for model quantization to 4.
+--warmup_ratio 0.03 \            # Specifies that 3% of total training steps are used for learning rate warmup.=
+--lr_scheduler_type constant \    # Uses a constant learning rate schedule.
+--gradient_checkpointing \   # Enables gradient checkpointing to save memory during backpropagation.
+--dataset #FILL IN# \        # Specifies the path to the training dataset. Replace `#FILL IN#` with the actual dataset path.
+--source_max_len 512 \       # Sets the maximum token length for input sequences to 512.
+--target_max_len 256 \       # Sets the maximum token length for target sequences to 256.
+--per_device_train_batch_size 1 \   # Sets the batch size to 1 per GPU for training.
+--gradient_accumulation_steps 8 \   # Accumulates gradients over 8 steps before updating model weights.
+--max_steps 250 \         # Limits the training process to 250 steps.
+--eval_steps 187 \        # Evaluates the model every 187 training steps.
+--learning_rate 0.0002 \   # Sets the initial learning rate for training.
+--adam_beta2 0.999 \    # Sets the beta2 parameter for the Adam optimizer.
+--max_grad_norm 0.3 \  # Clips gradients to a maximum norm of 0.3 to stabilize training.
+--lora_dropout 0.1 \   # Applies dropout of 10% to LoRA layers during training.
+--weight_decay 0.0 \   # No weight decay is applied during training.
+--seed 0               # Sets the random seed for reproducibility.
